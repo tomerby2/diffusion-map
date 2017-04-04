@@ -1,3 +1,7 @@
 # This is git ignore file.
 
 *.asv
+*.idx3-ubyte
+*.idx1-ubyte
+*.gz
+*.zip
