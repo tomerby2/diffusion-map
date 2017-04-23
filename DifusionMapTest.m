@@ -6,8 +6,9 @@ labels = loadMNISTLabels('train-labels.idx1-ubyte');
 
 N        = 1000;
 % run on each digit
-for j=0:9
-    lable    = find(labels == j, N);
+ for jj = 0 : 9
+%for jj = 7
+    lable    = find(labels == jj, N);
     s_images = images(:,lable);
     figure;
     display_network(s_images(:,1:100)); % Show the first 100 images
@@ -24,7 +25,7 @@ for j=0:9
 
     %% plotting scatter 3D
     figure; scatter3(EigVec(:,2), EigVec(:,3), EigVec(:,4), 100, 1:N, 'Fill'); colorbar;
-    title(['diffusion map of digit ' num2str(j)]);
+    title(['diffusion map of digit ' num2str(jj)]);
     xlabel('\psi_2');
     ylabel('\psi_3');
     zlabel('\psi_4');
@@ -33,18 +34,16 @@ for j=0:9
     %% show example for psi2 & psi3
 
     figure;
-    for i=1:N
-        if( abs(EigVec(i,3))<0.005 || abs(EigVec(i,2))<0.005)
-            xImage = [EigVec(i,2)-0.001 EigVec(i,2)-0.001; EigVec(i,2)+0.001 EigVec(i,2)+0.001];
-            yImage = [EigVec(i,3)+0.001 EigVec(i,3)-0.001; EigVec(i,3)+0.001 EigVec(i,3)-0.001];
-            zImage = [EigVec(i,4) EigVec(i,4); EigVec(i,4) EigVec(i,4)];
-            surf(xImage,yImage,zImage,'CData',vec2mat(s_images(:,i),28),...
+    for ii = 1 : 150
+            xImage = [EigVec(ii,2)-0.0015 EigVec(ii,2)-0.0015; EigVec(ii,2)+0.0015 EigVec(ii,2)+0.0015];
+            yImage = [EigVec(ii,3)+0.0015 EigVec(ii,3)-0.0015; EigVec(ii,3)+0.0015 EigVec(ii,3)-0.0015];
+            zImage = [EigVec(ii,4) EigVec(ii,4); EigVec(ii,4) EigVec(ii,4)];
+            surf(xImage,yImage,zImage,'CData',vec2mat(s_images(:,ii),28),...
               'FaceColor','texturemap');
             hold on;
-        end
     end
     hold off;
-     title(['sampels pictures of digit ' num2str(j) ' for the first 2 eig-vecs']);
+     title(['sampels pictures of digit ' num2str(jj) ' for the first 2 eig-vecs']);
     xlabel('\psi_2');
     ylabel('\psi_3');
     zlabel('\psi_4');
